@@ -47,12 +47,10 @@ jobs:
         env:
           JEKYLL_ENV: production
       - name: Upload artifact
-        # Upload entire Jekyll site
-        uses: actions/upload-artifact@v4
+        # Upload the _site directory using a Pages-specific artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          name: github-pages
           path: "_site"
-          retention-days: 1
   
   # Deployment job
   deploy:
