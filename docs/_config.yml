@@ -1,20 +1,14 @@
-# Place this in the root of your repository
+
 title: "Computer Science Courses"
 description: "Course materials for CS classes"
 baseurl: "/programming"
 url: "https://mssmcs.github.io"
 
 # Build settings
-theme: just-the-docs
-color_scheme: light
-search_enabled: true
-heading_anchors: true
+theme: jekyll-theme-cayman
+permalink: pretty
 
-# Set the source directory where your content is
-source: docs
-
-
-# Default layout
+# Default layout settings
 defaults:
   -
     scope:

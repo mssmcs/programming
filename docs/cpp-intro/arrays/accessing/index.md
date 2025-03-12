@@ -1,9 +1,6 @@
 ---
 layout: default
 title: Accessing Elements
-parent: Array Class
-grand_parent: C++ Introduction
-nav_order: 2
 ---
 
 # Accessing Elements

@@ -1,10 +1,7 @@
 ---
 layout: default
-title: Array Class
-parent: C++ Introduction
+title: Working with the Array Class
 nav_order: 1
-has_children: true
-permalink: /programming/cpp-intro/arrays/
 ---
 
 # Working with the Array Class
@@ -29,3 +26,11 @@ To use the `Array<>` class, include the appropriate header file:
 ```
 
 See the subpages for detailed information on creating and working with arrays.
+
+## Topics
+
+- [Creating Arrays]({{ site.baseurl }}/cpp-intro/arrays/creating/)
+- [Accessing Elements]({{ site.baseurl }}/cpp-intro/arrays/accessing/)
+- [Modifying Arrays]({{ site.baseurl }}/cpp-intro/arrays/modifying/)
+- [Using Loops with Arrays]({{ site.baseurl }}/cpp-intro/arrays/loops/)
+- [Common Array Patterns]({{ site.baseurl }}/cpp-intro/arrays/patterns/)

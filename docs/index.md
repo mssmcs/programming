@@ -10,5 +10,5 @@ Welcome to the course materials for CS classes.
 
 ## Available Resources
 
-- [C++ Introduction](/programming/cpp-intro/)
-  - [Array Class Documentation](/programming/cpp-intro/arrays/)
+- [C++ Introduction]({{ site.baseurl }}/cpp-intro/)
+  - [Array Class Documentation]({{ site.baseurl }}/cpp-intro/arrays/)

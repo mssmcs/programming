@@ -1,9 +1,6 @@
 ---
 layout: default
 title: Creating Arrays
-parent: Array Class
-grand_parent: C++ Introduction
-nav_order: 1
 ---
 
 # Creating Arrays
