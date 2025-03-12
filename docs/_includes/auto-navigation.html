@@ -1,73 +1,54 @@
-
 <!-- Main Navigation -->
 <nav class="navigation">
     <a href="{{ site.baseurl }}/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
-    
-    {% assign main_sections = site.pages | where_exp: "item", "item.url contains '/' and item.url != '/' and item.path contains 'index.md'" | sort: "url" %}
-    {% assign top_level_sections = "" | split: "" %}
-    
-    {% for section in main_sections %}
-      {% assign path_parts = section.path | split: "/" %}
-      {% if path_parts.size == 3 and path_parts[1] != "_" %}
-        {% assign top_level_sections = top_level_sections | push: section %}
+  
+    {% comment %} Get top-level sections {% endcomment %}
+    {% assign pages_list = site.pages | sort: "url" %}
+    {% for node in pages_list %}
+      {% assign node_url_parts = node.url | split: '/' %}
+      {% assign node_url_parts_size = node_url_parts | size %}
+      {% assign filename = node_url_parts | last %}
+  
+      {% comment %} Only include top-level sections with index.html or index.md {% endcomment %}
+      {% if node_url_parts_size == 3 and filename == '' and node.title %}
+        <a href="{{ site.baseurl }}{{ node.url }}" {% if page.url contains node.url %}class="active"{% endif %}>
+          {{ node.title }}
+        </a>
       {% endif %}
-    {% endfor %}
-    
-    {% for section in top_level_sections %}
-      <a href="{{ site.baseurl }}{{ section.url }}" {% if page.url contains section.url %}class="active"{% endif %}>
-        {{ section.title }}
-      </a>
     {% endfor %}
   </nav>
   
   <!-- Sub Navigation (Appears when in a section) -->
-  {% if page.url contains '/' and page.url != '/' %}
-    {% assign current_section = page.url | split: '/' | slice: 1 | first %}
-    {% assign sub_sections = site.pages | where_exp: "item", "item.url contains '/' and item.path contains 'index.md'" | sort: "url" %}
-    {% assign matching_subsections = "" | split: "" %}
+  {% if page.url != "/" %}
+    {% assign url_parts = page.url | split: '/' %}
+    {% assign section_path = url_parts[1] | prepend: '/' | append: '/' %}
     
-    {% for section in sub_sections %}
-      {% assign path_parts = section.path | split: "/" %}
-      {% if path_parts.size == 4 and path_parts[1] == current_section %}
-        {% assign matching_subsections = matching_subsections | push: section %}
-      {% endif %}
-    {% endfor %}
-    
-    {% if matching_subsections.size > 0 %}
+    {% if url_parts.size >= 3 %}
       <nav class="sub-navigation">
-        {% for subsection in matching_subsections %}
-          <a href="{{ site.baseurl }}{{ subsection.url }}" {% if page.url contains subsection.url %}class="active"{% endif %}>
-            {{ subsection.title }}
-          </a>
+        {% for node in pages_list %}
+          {% assign node_url_parts = node.url | split: '/' %}
+          {% if node_url_parts.size == 4 and node.url contains section_path and node.url != section_path and node.title %}
+            <a href="{{ site.baseurl }}{{ node.url }}" {% if page.url contains node.url %}class="active"{% endif %}>
+              {{ node.title }}
+            </a>
+          {% endif %}
         {% endfor %}
       </nav>
     {% endif %}
-  {% endif %}
-  
-  <!-- Topic Navigation (Appears when in a subsection) -->
-  {% if page.url contains '/' and page.url contains '/' and page.url != '/' %}
-    {% assign path_parts = page.url | split: '/' %}
-    {% if path_parts.size >= 4 %}
-      {% assign current_section = path_parts[1] %}
-      {% assign current_subsection = path_parts[2] %}
-      {% assign topic_pages = site.pages | where_exp: "item", "item.url contains '/' and item.path contains 'index.md'" | sort: "url" %}
-      {% assign matching_topics = "" | split: "" %}
+    
+    <!-- Topic Navigation (Appears when in a subsection) -->
+    {% if url_parts.size >= 4 %}
+      {% assign subsection_path = section_path | append: url_parts[2] | append: '/' %}
       
-      {% for topic in topic_pages %}
-        {% assign topic_path_parts = topic.path | split: "/" %}
-        {% if topic_path_parts.size == 5 and topic_path_parts[1] == current_section and topic_path_parts[2] == current_subsection %}
-          {% assign matching_topics = matching_topics | push: topic %}
-        {% endif %}
-      {% endfor %}
-      
-      {% if matching_topics.size > 0 %}
-        <nav class="topic-navigation">
-          {% for topic in matching_topics %}
-            <a href="{{ site.baseurl }}{{ topic.url }}" {% if page.url == topic.url %}class="active"{% endif %}>
-              {{ topic.title }}
+      <nav class="topic-navigation">
+        {% for node in pages_list %}
+          {% assign node_url_parts = node.url | split: '/' %}
+          {% if node_url_parts.size == 5 and node.url contains subsection_path and node.url != subsection_path and node.title %}
+            <a href="{{ site.baseurl }}{{ node.url }}" {% if page.url == node.url %}class="active"{% endif %}>
+              {{ node.title }}
             </a>
-          {% endfor %}
-        </nav>
-      {% endif %}
+          {% endif %}
+        {% endfor %}
+      </nav>
     {% endif %}
   {% endif %}
