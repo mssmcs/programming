@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,15 +24,29 @@
     .navigation {
       background-color: #f0f0f0;
       padding: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       border-radius: 5px;
     }
-    .navigation a {
+    .sub-navigation, .topic-navigation {
+      background-color: #e8e8e8;
+      padding: 8px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      font-size: 0.9em;
+    }
+    .topic-navigation {
+      background-color: #e0e0e0;
+    }
+    .navigation a, .sub-navigation a, .topic-navigation a {
       margin-right: 15px;
       text-decoration: none;
+      color: #0366d6;
     }
-    .navigation a:hover {
+    .navigation a:hover, .sub-navigation a:hover, .topic-navigation a:hover {
       text-decoration: underline;
+    }
+    .navigation a.active, .sub-navigation a.active, .topic-navigation a.active {
+      font-weight: bold;
     }
   </style>
 </head>
@@ -42,13 +57,7 @@
   </header>
   
   <main class="content">
-    <div class="navigation">
-      <a href="{{ site.baseurl }}/">Home</a>
-      <a href="{{ site.baseurl }}/cpp-intro/">C++ Introduction</a>
-      <a href="{{ site.baseurl }}/cpp-intro/arrays/">Array Class</a>
-    </div>
-    
-    <h1>{{ page.title }}</h1>
+    {% include auto-navigation.html %}
     
     {{ content }}
   </main>
