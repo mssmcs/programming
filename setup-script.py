@@ -62,7 +62,11 @@ jobs:
         env:
           JEKYLL_ENV: production
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: ./_site
+          if-no-files-found: error
 
   deploy:
     environment:
