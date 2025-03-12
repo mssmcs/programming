@@ -64,12 +64,22 @@
       padding: 0.1em 0.3em;
       border-radius: 3px;
     }
+    /* Header styling */
+    .site-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.8;
+    }
+    .page-title {
+      font-size: 2.25rem;
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
   <header class="page-header" role="banner">
-    <h1 class="project-name">{{ site.title }}</h1>
-    <h2 class="project-tagline">{{ site.description }}</h2>
+    <h2 class="site-title">{{ site.title }}</h2>
+    <h1 class="page-title">{{ page.title }}</h1>
   </header>
   
   <main class="content">
