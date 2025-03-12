@@ -1,29 +1,37 @@
+#!/usr/bin/env python3
 import os
 import shutil
+import sys
 
 def create_file(path, content):
     """Creates a file with the specified content."""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
+    print(f"Created: {path}")
 
-def setup_github_pages():
-    """Sets up a GitHub Pages site with array documentation."""
-    
+def setup_github_pages_repository():
+    """Sets up a GitHub Pages repository for 'Deploy from a branch' method."""
     # Create base directories
     for dir_path in [
         "docs",
         "docs/_layouts",
         "docs/_includes",
+        "docs/assets/css",
+        "docs/assets/js",
         "docs/cpp-intro",
         "docs/cpp-intro/arrays",
-        ".github/workflows"
+        "docs/cpp-intro/arrays/creating",
+        "docs/cpp-intro/arrays/accessing",
+        "docs/cpp-intro/arrays/modifying",
+        "docs/cpp-intro/arrays/loops",
+        "docs/cpp-intro/arrays/patterns"
     ]:
         os.makedirs(dir_path, exist_ok=True)
+        print(f"Created directory: {dir_path}")
     
     # Create _config.yml
-    config_content = """
-title: "Computer Science Courses"
+    config_content = """title: "Computer Science Courses"
 description: "Course materials for CS classes"
 baseurl: "/programming"
 url: "https://mssmcs.github.io"
@@ -49,7 +57,7 @@ defaults:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} | {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   <style>
     .content {
       max-width: 1000px;
@@ -114,11 +122,23 @@ layout: default
 """
     create_file("docs/_layouts/home.html", home_layout)
     
+    # Create custom CSS
+    custom_css = """/* Custom CSS overrides */
+.highlight pre {
+  background-color: #272822;
+  color: #f8f8f2;
+}
+"""
+    create_file("docs/assets/css/style.scss", """---
+---
+
+@import "{{ site.theme }}";
+""" + custom_css)
+    
     # Create main index page
     main_index = """---
 layout: home
 title: Home
-nav_order: 1
 ---
 
 # Computer Science Courses
@@ -136,7 +156,6 @@ Welcome to the course materials for CS classes.
     cpp_intro_index = """---
 layout: default
 title: C++ Introduction
-nav_order: 2
 ---
 
 # Introduction to C++
@@ -153,7 +172,6 @@ This section contains resources for learning C++ programming.
     array_index = """---
 layout: default
 title: Working with the Array Class
-nav_order: 1
 ---
 
 # Working with the Array Class
@@ -177,8 +195,6 @@ To use the `Array<>` class, include the appropriate header file:
 #include "array.h"
 ```
 
-See the subpages for detailed information on creating and working with arrays.
-
 ## Topics
 
 - [Creating Arrays]({{ site.baseurl }}/cpp-intro/arrays/creating/)
@@ -188,72 +204,6 @@ See the subpages for detailed information on creating and working with arrays.
 - [Common Array Patterns]({{ site.baseurl }}/cpp-intro/arrays/patterns/)
 """
     create_file("docs/cpp-intro/arrays/index.md", array_index)
-    
-    # Create GitHub Actions workflow
-    workflow_content = """name: Deploy Jekyll site to Pages
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  # Build job
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v3
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./docs
-          destination: ./_site
-      # Package site
-      - name: Package site
-        shell: bash
-        run: |
-          tar \
-            --dereference --hard-dereference \
-            --directory "_site/" \
-            -cvf "$RUNNER_TEMP/artifact.tar" \
-            --exclude=.git \
-            --exclude=.github \
-            .
-      # Upload artifact
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: github-pages
-          path: ${{ runner.temp }}/artifact.tar
-          retention-days: 1
-          if-no-files-found: error
-  
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
-"""
-    create_file(".github/workflows/jekyll-pages.yml", workflow_content)
     
     # Create array documentation pages
     array_topics = {
@@ -827,17 +777,34 @@ for (int i = 0; i < queue.size(); i++) {
     for topic, content in array_topics.items():
         create_file(f"docs/cpp-intro/arrays/{topic}/index.md", content)
     
+    # Create a CNAME file if needed
+    # create_file("docs/CNAME", "yourdomain.com")
+    
+    # Create .nojekyll file if needed to prevent Jekyll processing
+    # create_file("docs/.nojekyll", "")
+    
     print("""
-GitHub Pages site with Array documentation has been set up!
+GitHub Pages repository has been successfully set up for 'Deploy from a branch'!
 
 Next steps:
-1. Commit and push these changes to your repository
-2. GitHub Actions will automatically build and deploy your site
-3. Your site should be available at: https://mssmcs.github.io/programming/
+1. Commit and push these changes to your repository:
+   git add .
+   git commit -m "Set up GitHub Pages with Jekyll"
+   git push
 
-The site uses the GitHub-maintained Jekyll actions which should resolve the issues
-you've been experiencing with custom workflows.
+2. Configure GitHub Pages in your repository settings:
+   - Go to Settings → Pages
+   - Under "Build and deployment" → "Source", select "Deploy from a branch"
+   - For "Branch", select "main" (or your default branch)
+   - For the folder, select "/docs"
+   - Click "Save"
+
+3. Wait for GitHub to build your site (usually takes 1-2 minutes)
+   Your site will be available at: https://mssmcs.github.io/programming/
+
+This approach bypasses all the GitHub Actions complexities and uses GitHub's built-in 
+Jekyll processing, which is more reliable for straightforward documentation sites.
 """)
 
 if __name__ == "__main__":
-    setup_github_pages()
+    setup_github_pages_repository()

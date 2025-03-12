@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Working with the Array Class
-nav_order: 1
 ---
 
 # Working with the Array Class
@@ -24,8 +23,6 @@ To use the `Array<>` class, include the appropriate header file:
 ```cpp
 #include "array.h"
 ```
-
-See the subpages for detailed information on creating and working with arrays.
 
 ## Topics
 
