@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,21 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} | {{ site.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  
+  <!-- Prism CSS - Choose a theme that works well for you -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  
   <style>
     .content {
       max-width: 1000px;
       margin: 0 auto;
       padding: 20px;
     }
-    pre {
-      background-color: #f6f8fa;
-      border-radius: 6px;
-      padding: 16px;
-      overflow: auto;
+    /* Hide the default Rouge highlighting */
+    .highlight {
+      background: transparent;
+      padding: 0;
+      margin: 0;
     }
-    code {
-      font-family: monospace;
-    }
+    /* Navigation styles */
     .navigation {
       background-color: #f0f0f0;
       padding: 10px;
@@ -48,6 +49,18 @@
     .navigation a.active, .sub-navigation a.active, .topic-navigation a.active {
       font-weight: bold;
     }
+    /* Customize Prism styles */
+    pre[class*="language-"] {
+      border-radius: 6px;
+      margin: 1.5em 0;
+    }
+    :not(pre) > code {
+      background: #f6f8fa;
+      color: #24292e;
+      padding: 0.1em 0.3em;
+      border-radius: 3px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
   </style>
 </head>
 <body>
@@ -65,5 +78,53 @@
   <footer class="site-footer">
     <p>Maintained by MSSM CS Department</p>
   </footer>
+
+  <!-- Prism JS - Core and languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  
+  <!-- Additional customizations for Prism -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find all code blocks with the Rouge highlight wrapper
+      document.querySelectorAll('.highlight').forEach(function(highlightDiv) {
+        // Check if this div contains a code element
+        const codeElement = highlightDiv.querySelector('pre.highlight code');
+        if (codeElement) {
+          // Extract the code
+          const code = codeElement.textContent;
+          
+          // Create a new pre element
+          const newPre = document.createElement('pre');
+          
+          // Create a new code element
+          const newCode = document.createElement('code');
+          
+          // Set the language class based on the Rouge language or default to cpp
+          const languageClass = highlightDiv.className.match(/language-(\w+)/);
+          if (languageClass && languageClass[1]) {
+            newCode.className = 'language-' + languageClass[1];
+          } else {
+            // Default to cpp since that's most of your content
+            newCode.className = 'language-cpp';
+          }
+          
+          // Set the code text content
+          newCode.textContent = code;
+          
+          // Append the code to the pre
+          newPre.appendChild(newCode);
+          
+          // Replace the highlight div with the new pre
+          highlightDiv.parentNode.replaceChild(newPre, highlightDiv);
+        }
+      });
+      
+      // Highlight all code again with Prism
+      if (typeof Prism !== 'undefined') {
+        Prism.highlightAll();
+      }
+    });
+  </script>
 </body>
 </html>
