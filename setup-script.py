@@ -49,20 +49,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v3
       - name: Build with Jekyll
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v1
 
   deploy:
     environment:
@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v1
 """
     write_file(os.path.join(base_path, ".github", "workflows", "pages.yml"), github_actions_workflow)
     
