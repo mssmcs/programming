@@ -24,10 +24,4 @@ To use the `Array<>` class, include the appropriate header file:
 #include "array.h"
 ```
 
-## Topics
-
-- [Creating Arrays]({{ site.baseurl }}/cpp-intro/arrays/creating/)
-- [Accessing Elements]({{ site.baseurl }}/cpp-intro/arrays/accessing/)
-- [Modifying Arrays]({{ site.baseurl }}/cpp-intro/arrays/modifying/)
-- [Using Loops with Arrays]({{ site.baseurl }}/cpp-intro/arrays/loops/)
-- [Common Array Patterns]({{ site.baseurl }}/cpp-intro/arrays/patterns/)
+{% include subtopics.html %}

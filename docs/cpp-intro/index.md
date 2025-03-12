@@ -1,56 +1,66 @@
 ---
 layout: default
-title: Home
+title: C++ Introduction
 ---
 
-# Computer Science Courses
+# C++ Introduction
 
-Welcome to the course materials for CS classes.
+An introduction to programming with C++.
 
-## Available Resources
+## Topics
 
-{% assign top_sections = site.pages | sort: "url" %}
-<ul class="section-list">
-{% for node in top_sections %}
+{% assign current_url = page.url %}
+{% assign pages_list = site.pages | sort: "title" %}
+{% assign has_children = false %}
+
+<ul class="topic-list">
+{% for node in pages_list %}
   {% assign node_url_parts = node.url | split: '/' %}
   {% assign node_url_parts_size = node_url_parts | size %}
-  {% assign filename = node_url_parts | last %}
+  {% assign node_parent_path = node.url | split: '/' | pop | join: '/' | append: '/' %}
   
-  {% if node_url_parts_size == 3 and filename == '' and node.title and node.url != '/' %}
+  {% if node_parent_path == current_url and node.url != current_url and node.title %}
+    {% assign has_children = true %}
     <li>
       <a href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
-      
-      <!-- Find subsections for this section -->
-      <ul>
-      {% for subnode in top_sections %}
-        {% assign subnode_url_parts = subnode.url | split: '/' %}
-        {% if subnode_url_parts.size == 4 and subnode.url contains node.url and subnode.url != node.url and subnode.title %}
-          <li><a href="{{ site.baseurl }}{{ subnode.url }}">{{ subnode.title }}</a></li>
-        {% endif %}
-      {% endfor %}
-      </ul>
+      {% if node.description %}
+      <p class="topic-description">{{ node.description }}</p>
+      {% endif %}
     </li>
   {% endif %}
 {% endfor %}
 </ul>
 
+{% if has_children == false %}
+<p><em>No subtopics available yet.</em></p>
+{% endif %}
+
 <style>
-  .section-list {
+  .topic-list {
     list-style-type: none;
     padding-left: 0;
   }
   
-  .section-list > li {
-    margin-bottom: 1.5em;
+  .topic-list > li {
+    margin-bottom: 1.2em;
   }
   
-  .section-list > li > a {
+  .topic-list > li > a {
     font-weight: bold;
     font-size: 1.1em;
+    color: #0366d6;
+    text-decoration: none;
   }
   
-  .section-list ul {
-    margin-top: 0.5em;
-    padding-left: 1.5em;
+  .topic-list > li > a:hover {
+    text-decoration: underline;
+  }
+  
+  .topic-description {
+    margin-top: 0.3em;
+    margin-bottom: 0;
+    color: #555;
   }
 </style>
+
+{% include subtopics.html %}

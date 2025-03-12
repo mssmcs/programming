@@ -1,39 +1,20 @@
----
-layout: default
-title: Docs
----
-
-# Docs
-
-Documentation and resources for docs.
-
-## Topics
+<h2>Topics</h2>
 
 {% assign current_url = page.url %}
 {% assign pages_list = site.pages | sort: "title" %}
-{% assign has_children = false %}
 
 <ul class="topic-list">
 {% for node in pages_list %}
   {% assign node_url_parts = node.url | split: '/' %}
-  {% assign node_url_parts_size = node_url_parts | size %}
   {% assign node_parent_path = node.url | split: '/' | pop | join: '/' | append: '/' %}
   
   {% if node_parent_path == current_url and node.url != current_url and node.title %}
-    {% assign has_children = true %}
     <li>
       <a href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
-      {% if node.description %}
-      <p class="topic-description">{{ node.description }}</p>
-      {% endif %}
     </li>
   {% endif %}
 {% endfor %}
 </ul>
-
-{% if has_children == false %}
-<p><em>No subtopics available yet.</em></p>
-{% endif %}
 
 <style>
   .topic-list {
@@ -54,11 +35,5 @@ Documentation and resources for docs.
   
   .topic-list > li > a:hover {
     text-decoration: underline;
-  }
-  
-  .topic-description {
-    margin-top: 0.3em;
-    margin-bottom: 0;
-    color: #555;
   }
 </style>
