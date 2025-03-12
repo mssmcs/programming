@@ -36,7 +36,7 @@ jobs:
           echo "Running bundle install..."
           bundle install
           echo "Running jekyll build..."
-          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+          bundle exec jekyll build --baseurl "/programming" --source docs
         env:
           JEKYLL_ENV: production
       

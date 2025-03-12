@@ -13,10 +13,6 @@ heading_anchors: true
 # Set the source directory where your content is
 source: docs
 
-# Just the Docs settings
-aux_links:
-  "GitHub Repository":
-    - "//github.com/mssmcs/programming"
 
 # Default layout
 defaults:
