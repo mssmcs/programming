@@ -1,8 +1,6 @@
-title: Just the Docs Template
-description: A starter template for a Jeykll site using the Just the Docs theme!
+title: MSSM Programming
+description: Information for computer science students at the Maine School of Science and Mathematics
 theme: just-the-docs
 
-url: https://just-the-docs.github.io
+url: https://mssmcs.github.io/programming
 
-aux_links:
-  Template Repository: https://github.com/just-the-docs/just-the-docs-template
