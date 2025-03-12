@@ -1,3 +1,5 @@
+# Gemfile
+# Place this in the root of your repository
 source "https://rubygems.org"
 
 gem "jekyll", "~> 4.3.2"
