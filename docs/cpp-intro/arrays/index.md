@@ -4,7 +4,7 @@ title: Array Class
 parent: C++ Introduction
 nav_order: 1
 has_children: true
-permalink: /courses/cpp-intro/arrays/
+permalink: /programming/cpp-intro/arrays/
 ---
 
 # Working with the Array Class

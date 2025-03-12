@@ -49,20 +49,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
       - name: Build with Jekyll
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
 
   deploy:
     environment:
@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
 """
     write_file(os.path.join(base_path, ".github", "workflows", "pages.yml"), github_actions_workflow)
     
@@ -106,8 +106,8 @@ gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
     # Create _config.yml
     config_content = """title: "Computer Science Courses"
 description: "Course materials for CS classes"
-baseurl: "/courses"
-url: "https://hamling.github.io"
+baseurl: "/programming"
+url: "https://mssmcs.github.io"
 
 # Build settings
 theme: just-the-docs
@@ -118,7 +118,7 @@ heading_anchors: true
 # Just the Docs settings
 aux_links:
   "GitHub Repository":
-    - "//github.com/hamling/courses"
+    - "//github.com/mssmcs/programming"
 
 # Default layout
 defaults:
@@ -143,8 +143,8 @@ Welcome to the course materials for CS classes.
 
 ## Available Resources
 
-- [C++ Introduction](/courses/cpp-intro/)
-  - [Array Class Documentation](/courses/cpp-intro/arrays/)
+- [C++ Introduction](/programming/cpp-intro/)
+  - [Array Class Documentation](/programming/cpp-intro/arrays/)
 """
     write_file(os.path.join(base_path, "docs", "index.md"), main_index_content)
     
@@ -154,7 +154,7 @@ layout: default
 title: C++ Introduction
 nav_order: 2
 has_children: true
-permalink: /courses/cpp-intro/
+permalink: /programming/cpp-intro/
 ---
 
 # Introduction to C++
@@ -163,7 +163,7 @@ This section contains resources for learning C++ programming.
 
 ## Available Topics
 
-- [Array Class](/courses/cpp-intro/arrays/)
+- [Array Class](/programming/cpp-intro/arrays/)
 """
     write_file(os.path.join(base_path, "docs", "cpp-intro", "index.md"), cpp_intro_index)
     
@@ -174,7 +174,7 @@ title: Array Class
 parent: C++ Introduction
 nav_order: 1
 has_children: true
-permalink: /courses/cpp-intro/arrays/
+permalink: /programming/cpp-intro/arrays/
 ---
 
 # Working with the Array Class
@@ -347,7 +347,7 @@ Like with the square bracket operator, the `front()` and `back()` methods will t
     print("2. Go to your repository settings -> Pages")
     print("3. Under 'Build and deployment', select 'GitHub Actions'")
     print("4. Wait for the GitHub Actions workflow to complete")
-    print("5. Your site should be available at: https://hamling.github.io/courses/")
+    print("5. Your site should be available at: https://mssmcs.github.io/programming/")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

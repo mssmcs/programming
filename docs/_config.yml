@@ -1,7 +1,7 @@
 title: "Computer Science Courses"
 description: "Course materials for CS classes"
-baseurl: "/courses"
-url: "https://hamling.github.io"
+baseurl: "/programming"
+url: "https://mssmcs.github.io"
 
 # Build settings
 theme: just-the-docs
@@ -12,7 +12,7 @@ heading_anchors: true
 # Just the Docs settings
 aux_links:
   "GitHub Repository":
-    - "//github.com/hamling/courses"
+    - "//github.com/mssmcs/programming"
 
 # Default layout
 defaults:
