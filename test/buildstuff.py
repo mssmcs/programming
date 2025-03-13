@@ -21,6 +21,7 @@ def generate_cpp_basics_docs():
     # Documentation topics with their content
     topics = [
         {
+            'topic_folder': 'index',
             'filename': 'index.md',
             'content': '''---
 layout: default
@@ -65,7 +66,8 @@ An introduction to fundamental C++ programming concepts for beginners.
 </style>'''
         },
         {
-            'filename': 'variables-and-data-types.md',
+            'topic_folder': 'variables-and-data-types',
+            'filename': 'index.md',
             'content': '''---
 layout: default
 title: Variables and Data Types
@@ -158,7 +160,8 @@ double doubleValue = static_cast<double>(intValue);  // Explicit type conversion
 - Choose types that accurately represent your data'''
         },
         {
-            'filename': 'literals-and-expressions.md',
+            'topic_folder': 'literals-and-expressions',
+            'filename': 'index.md',
             'content': '''---
 layout: default
 title: Literals and Expressions
@@ -279,7 +282,8 @@ count++;
 - Understand operator precedence'''
         },
         {
-            'filename': 'operators.md',
+            'topic_folder': 'operators',
+            'filename': 'index.md',
             'content': '''---
 layout: default
 title: Operators in C++
@@ -369,7 +373,8 @@ int grouped = (10 + 5) * 2;  // Parentheses change order: 30
 - Be aware of type conversion in mixed expressions'''
         },
         {
-            'filename': 'control-statements.md',
+            'topic_folder': 'control-statements',
+            'filename': 'index.md',
             'content': '''---
 layout: default
 title: Control Statements
@@ -524,9 +529,12 @@ if (x > 0) {
         }
     ]
 
-    # Write each topic to a file
+    # Write each topic to a file in its own subdirectory
     for topic in topics:
-        file_path = os.path.join(base_path, topic['filename'])
+        topic_path = os.path.join(base_path, topic['topic_folder'])
+        create_directory(topic_path)
+        
+        file_path = os.path.join(topic_path, topic['filename'])
         write_file(file_path, topic['content'])
 
     print(f"Generated C++ Basics documentation in {base_path}")
