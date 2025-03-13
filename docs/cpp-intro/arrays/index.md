@@ -24,4 +24,10 @@ To use the `Array<>` class, include the appropriate header file:
 #include "array.h"
 ```
 
+or 
+
+```cpp
+#include "mssm.h"
+```
+
 {% include subtopics.html %}
